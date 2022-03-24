@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ user.username }} | Noobsterr - Meeting{% endblock title %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <a href="{% url 'core:accept_request' %}"
+      class="nav-item nav-link sticky-top btn-primary">Requested Meeting</a>
+  </div>
+</div>
+<div class="container d-flex justify-content-center" id="center">
+  <div class="row mt-lg-5 mt-md-5">
+      <div class="col col-sm-12 col-md-12">
+
+<!-- Meeting views, Only not completed meetings -->
+{% if meeting %}
+    {% for meet in meeting %}
+      {% if not meet.is_completed %}
+    <div class="card">
+      <div class="card-body">
+        <div class="card-block px-2">
+          <p class="card-title">Meeting</p>
+          <p class="card-text">Profession: {{ meet.interviewer.username }}</p>
+          <p class="card-text">Date: {{ meet.meet_date_time }}</p>
+          <p>{{ time_now }}</p>
+          <p>{% if minute < 0 %}{{ minute }} minutes till meeting {% else %}{{ minute }} minutes completed {% endif %}</p>
+        </div>
+      </div>
+      {% if minute >= -10 and minute <= 120 %}
+      <div class="card-footer w-100 text-muted">
+        <!-- <p>{{ meet.meeting_link }}</p> -->
+        <div class="card-footer w-100 text-muted">
+          <a class="btn btn-success" href="{% url 'core:attend_now' meet.id %}" target="_blank">Join Meeting</a>
+      </div>
+      </div>
+      {% endif %}
+    </div><br>
+    {% endif %}
+    {% endfor %}
+{% endif %}
+
+
+  <!-- Pagination -->
+  <div class="row">
+    <nav class="col-lg-6 offset-lg-3 mt-4 d-flex justify-content-center">
+      <ul class="pagination">
+
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+          <a class="page-link" href="#"">Previous</a>
+        </li>
+        {% endif %}
+  
+        {% for i in page_obj.paginator.page_range %}
+        <li class=" page-item {% if page_obj.number == i %}active{% endif %}">
+            <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+        </li>
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+          <a class="page-link" href="#">Next</a>
+        </li>
+        {% endif %}
+
+      </ul>
+    </nav>
+  </div>
+  <!-- /Pagination -->
+
+</div></div></div>
+{% endblock %}

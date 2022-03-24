@@ -1,0 +1,73 @@
+<!-- templates/users/edit_profile.html -->
+{% extends 'base.html' %}
+
+{% block title %}Edit profile{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-6">
+      <h2 class="my-5">Edit profile</h2>
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+          {{ form.username.label_tag }}
+          <input type="text" class="form-control {% if form.username.errors %}is-invalid{% endif %}" id="id_username"
+            name="username" value='{{ form.username.value|default:user.username }}'>
+          {% if form.username.errors %}
+          <div class="invalid-feedback">{{ form.username.errors }}</div>
+          {% endif %}
+        </div>
+
+        <div class="form-group">
+          {{ form.full_name.label_tag }}
+          <textarea type="text" class="form-control {% if form.full_name.errors %}is-invalid{% endif %}" id="id_full_name"
+            name="full_name" value='{{ form.full_name.value }}' rows="5"></textarea>
+          {% if form.full_name.errors %}
+          <div class="invalid-feedback">{{ form.full_name.errors }}</div>
+          {% endif %}
+        </div>
+
+        <div class="form-group">
+          {{ form.profession.label_tag }}
+          <textarea type="text" class="form-control {% if form.profession.errors %}is-invalid{% endif %}" id="id_profession"
+            name="profession" value='{{ form.profession.value }}' rows="5"></textarea>
+          {% if form.profession.errors %}
+          <div class="invalid-feedback">{{ form.profession.errors }}</div>
+          {% endif %}
+        </div>
+
+        <div class="form-group">
+          {{ form.current_company.label_tag }}
+          <textarea type="text" class="form-control {% if form.current_company.errors %}is-invalid{% endif %}" id="id_current_company"
+            name="current_company" value='{{ form.current_company.value }}' rows="5"></textarea>
+          {% if form.current_company.errors %}
+          <div class="invalid-feedback">{{ form.current_company.errors }}</div>
+          {% endif %}
+        </div>
+
+        <div class="form-group">
+          {{ form.previous_companies.label_tag }}
+          <textarea type="text" class="form-control {% if form.previous_companies.errors %}is-invalid{% endif %}" id="id_previous_companies"
+            name="previous_companies" value='{{ form.previous_companies.value }}' rows="5"></textarea>
+          {% if form.previous_companies.errors %}
+          <div class="invalid-feedback">{{ form.previous_companies.errors }}</div>
+          {% endif %}
+        </div>
+
+        <div class="form-group">
+          {{ form.image.label_tag }}<br>
+          <input type="file" class="{% if form.image.errors %}is-invalid{% endif %}" id="id_image" name="image"
+            accept="image/*">
+          {% if form.image.errors %}
+          <div class="invalid-feedback">{{ form.image.errors }}</div>
+          {% endif %}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+      <br>
+    </div>
+  </div>
+</div>
+{% endblock content %}

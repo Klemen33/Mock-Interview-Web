@@ -1,0 +1,50 @@
+<!-- Create a different views and html page for requested Interviews -->
+<!-- Requested Mock Interview by Student, Accept the Interview or Ask for change timing if needed -->
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %} Noobsterr: Meeting Requested {% endblock %}
+
+{% block content %}
+<div class="jumbotron col col-lg-12">
+    <div class="container" style="width: fit-content; height: fit-content;">
+        <div class="row">
+            <p><strong>Requested Interview: </strong>{{ all_meeting_requests|length }}</p>
+        </div>
+    </div>
+</div>
+<div class="container d-flex justify-content-center" id="center">
+    <div class="row mt-lg-5 mt-md-5">
+        <div class="col col-sm-12 col-md-12">
+{% if user.is_interviewer %}
+    {% for meet_rq in all_meeting_requests %}
+    <div class="col">
+        <div class="card-block px-2">
+        <p class="card-text">Student Name: {{ meet_rq.student_user }}</p>
+        <p class="card-text">Date & Time: {{ meet_rq.meet_date_time }}</p>
+        <a href="accept/{{meet_rq.id}}" class="btn btn-success" id = '{{meet_rq.id}}'>Accept</a>
+        <a href="delete/{{meet_rq.id}}" class="btn btn-danger" id = '{{meet_rq.id}}'>Delete</a>
+        </div>
+    </div>
+    <br>
+    <hr>
+    {% endfor%}
+{% else %}
+    {% for meet_rq in all_meeting_requests %}
+    <div class="col">
+        <div class="card-block px-2">
+        <p class="card-text">Professional Name: {{ meet_rq.interviewer_user }}</p>
+        <p class="card-text">Date & Time: {{ meet_rq.meet_date_time }}</p>
+        <a href="{% url 'core:meet_edit' meet_rq.id %}" class="btn btn-success" id = '{{meet_rq.id}}'>Edit</a>
+        <a href="delete/{{meet_rq.id}}" class="btn btn-danger" id = '{{meet_rq.id}}'>Delete</a>
+        <!-- <button class="btn btn-danger" type="submit">Delete</button> -->
+        </div>
+    </div>
+    <br>
+    <hr>
+    {% endfor %}
+{% endif %}
+</div>
+</div></div>
+{% endblock %}

@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.css' %}">
+  
+    <!-- Title -->
+    <title>{% block title %}{% endblock %}</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-sm navbar-light bg-light sticky-top">
+        <div class="container">
+          <a href="{% url 'core:home' %}" class="navbar-brand">Noobsterr</a>
+          <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+            <div class="navbar-nav">
+              <a href="{% url 'core:home' %}" class="nav-item nav-link">Home</a>
+          {% if user.is_authenticated %}
+            {% if user.is_student %}
+              <a href="{% url 'users:student_profile' request.user.username %}"
+                class="nav-item nav-link {% if request.user.username in request.path %}active{% endif %}">
+                Profile
+              </a>
+              <a href="{% url 'core:meeting' %}"
+                class="nav-item nav-link {% if request.user.username in request.path %}active{% endif %}">
+                Mock Interview
+              </a>
+              {% else %}
+              <a href="{% url 'users:interviewer_profile' request.user.username %}"
+              class="nav-item nav-link {% if request.user.username in request.path %}active{% endif %}">
+              Profile
+              </a>
+              <a href="{% url 'core:accept_request' %}"
+              class="nav-item nav-link {% if request.user.username in request.path %}active{% endif %}">
+              Meet Request
+              </a>
+              {% endif %}
+            <a class="btn btn-light" href="{% url 'users:logout' %}">Log out</a>
+          {% else %}
+            <a href="{% url 'users:login' %}" class="btn btn-light" role="button">Log in</a>
+            <a href="{% url 'users:signup' %}" class="btn btn-primary" role="button">Sign up</a>
+          {% endif %}
+            </div>
+          </div>
+        </div>
+        <!-- <div class="col-6 text-right"> -->
+          
+        <!-- </div> -->
+    </nav>
+    {% if user.is_authenticated %}
+      <div class="container"><div class="row"><p class="pt-3">Logged in as <strong>{{ user.username }}</strong>.</div></div>
+    {% endif %}
+    {% block content %}
+    {% endblock %}
+
+    <br><br>
+<!-- Footer -->
+<footer class="page-footer font-small bg-primary fixed-bottom">
+
+  <!-- Copyright -->
+  <div class="footer-copyright text-center py-3">© 2021 Copyright:
+    <a href="{% url 'core:home' %}" style="color: rgb(9, 209, 209);">noobster.in</a>
+  </div>
+  <!-- Copyright -->
+
+</footer>
+<!-- Footer -->
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+  </body>
+</html>

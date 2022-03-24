@@ -1,0 +1,67 @@
+{% extends '../base.html' %}
+{% load static %}
+
+
+{% block title %} Noobsterr: Dashboard {% endblock %}
+
+{% block content %}
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert {% if message.tags %} alert-{{ message.tags }}{% endif %}">{{ message|safe }}</div>
+  {% endfor %}
+{% endif %}
+<div class="container">
+    <div class="row">
+        <div class="col col-lg-6 col-md-6">
+            <p><strong>Interview Count: </strong><i>{{ meeting|length }}</i></p>
+            <!-- <p><strong>Interview Count: </strong><i>{{ meeting_completed }}</i></p> -->
+        </div>
+    </div>
+</div>
+<hr>
+            <!-- Mock Interview In the Future, Accepted but not complete... -->
+    <div class="container">
+        <div class="row mt-lg-5 mt-md-5">
+            <div class="col col-lg-6 col-md-12">
+                <p><strong>Pending Interviews:</strong></p>
+                {% for interv in meeting %}
+                    {% if not interv.is_completed %}
+                    <div class="card-body">
+                        <div class="card-block px-2">
+                        <p>Student Name: {{ interv.student.username }}</p>
+                        <p>Date: {{ interv.meet_date_time }}</p>
+                        <!-- <a>{{ interv.meeting_link }}</a> -->
+
+                        <!-- Need to pass the time now and the meeting time -->
+                        {% if interv.meeting_link %}
+                            {% if minute >= -10 and minute <= 120 %}
+                            <div class="card-footer w-100 text-muted">
+                                <a class="btn btn-success" href="{% url 'core:attend_now' interv.id %}" target="_blank">Start Meeting</a>
+                            </div>
+                            {% endif %}
+                        {% else %}
+                            <a class="btn btn-primary btn-block" href="{% url 'core:meeting_link' interv.id %}">Create Meeting Link</a>
+                        {% endif %}
+                        </div>
+                    {% endif %}
+                {% endfor%}
+            </div>
+        </div>
+    </div>
+
+
+            <!-- Completed Interview, Count the number of completed Interview -->
+            <!-- <!-- <div class="col col-lg-6 col-md-12 bg-danger"> -->
+                <!-- <p><strong>Completed Interview:</strong></p> -->
+                <!-- <p>Earning:</p> -->
+                <!-- <ol> -->
+                <!-- {#% for interv in meeting %#} -->
+                    <!-- {#% if interv.is_completed %} -->
+                        <!-- <li><p>Student Name: {{ interv.student }}</p></li> -->
+                    <!-- {#% endif %#} -->
+                <!-- {#% endfor%#} -->
+                <!-- </ol> -->
+            <!-- </div> -->
+        <!-- </div> -->
+    </div>
+{% endblock %}

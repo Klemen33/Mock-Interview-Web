@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %} Noobsterr: Professionals {% endblock %}
+
+{% block content %}
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert {% if message.tags %} alert-{{ message.tags }}{% endif %}">{{ message|safe }}</div>
+  {% endfor %}
+{% endif %}
+
+<div class="container justify-content-center" id="center">
+    <div class="row mt-lg-5 mt-md-5">
+        <div class="col col-sm-12 col-md-12">
+          <form class="d-flex text-center" method="GET" action="" value="{{request.GET.q}}">
+            {% csrf_token %}
+            <input class="form-control me-2" type="text" name="q" value="{{request.GET.q}}" placeholder="Search for Company Name/ Profession" ria-label="Search"/>
+            <input type="submit" name="submit" value="Search"/>
+        </form>
+        <br>
+        <hr>
+
+    <h4>You may like to select from the below Professionals:</h4>
+<!-- {#% if user.is_authenticated %#} -->
+    {% for profile in object_list %}
+    <div class="card col-lg-6 offset-lg-3 mb-3" style="background-color: #ddebe0;">
+      <div class="row">
+        {% if profile.image %}
+        <img class="card-img-top col-sm-3 col-4 my-3" src="{{ profile.image.url }}" alt="{{ profile.user.username }}">
+        {% else %}
+        <img class="card-img-top col-sm-3 col-4 my-3" src="{% static 'img/avatar.png' %}" alt="{{ profile.user.username }}">
+        {% endif %}
+        <div class="card-body col-9">
+          <h2 class="card-title my-3">{{ profile.user.username }}</h2>
+          <p class="card-text">Name - {{ profile.full_name }}</p>
+          <p class="card-text">{{ profile.profession }}</p>
+          <p class="card-text">Current Company - {{ profile.current_company }}</p>
+          <p class="card-text">Previous Companies - {{ profile.previous_companies }}</p>
+          <a class="btn btn-primary btn-block" href="{% url 'core:send_request' profile.user.id %}">Send Request</a>
+        </div>
+        <!-- <div class="card-footer w-100 text-muted"> -->
+          <!-- {#% with request.user.get_profile as profile %#} -->
+          <!-- <div>Status: -->
+            <!-- {#% if profile.is_online %#} -->
+                <!-- Online -->
+                <!-- <div class="card-footer w-100 text-muted">
+                  <!-- <a class="btn btn-success btn-block" href="{#% url 'agora:video-call' profile.user.id %#}">Call</a> -->
+                <!-- </div>  -->
+            <!-- {#% else %#} -->
+                <!-- Offline -->
+            <!-- {#% endif %#} -->
+
+          <!-- </div> -->
+      <!-- </div> -->
+    </div>
+  </div>    
+  {% endfor %}
+<!-- {#% endif %#} -->
+    </div>
+  </div>
+</div>
+<!-- Pagination -->
+<div class="row">
+    <nav class="col-lg-6 offset-lg-3 mt-4 d-flex justify-content-center">
+      <ul class="pagination">
+
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+          <a class="page-link" href="#"">Previous</a>
+        </li>
+        {% endif %}
+  
+        {% for i in page_obj.paginator.page_range %}
+        <li class=" page-item {% if page_obj.number == i %}active{% endif %}">
+            <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+        </li>
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+          <a class="page-link" href="#">Next</a>
+        </li>
+        {% endif %}
+
+      </ul>
+    </nav>
+  </div>
+  <!-- /Pagination -->
+{% endblock %}

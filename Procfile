@@ -1,0 +1,1 @@
+web: gunicorn noobsterr0.wsgi --log-file

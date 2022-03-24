@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+<!-- {#% load crispy_forms_tags %#} -->
+
+{% block content %}
+{% if messages %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {% for message in messages %}
+      <div class="alert {% if message.tags %} alert-{{ message.tags }}{% endif %}">{{ message|safe }}</div>
+    {% endfor %}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{% endif %}
+<div class="container d-flex justify-content-center" id="center">
+  <div class="row mt-lg-5 mt-md-5">
+      <div class="col col-sm-12 col-md-12">
+      <h2>Meeting Link Form</h2>
+      <p>Input your meeting link in the field below.</p>
+      <form method="post" novalidate>
+        {% csrf_token %}
+        <div class="form-group">
+          {{ form.meeting_link.label_tag }}
+          <input type="url" placeholder="URL" class="form-control {% if form.meeting_link.errors %}is-invalid{% endif %}" id="id_meeting_link"
+            name="meeting_link" value='{{ form.meeting_link.value|default:"" }}'>
+          <small class="text-muted">{{ form.meeting_link.help_text }}</small>
+          {% if form.meeting_link.errors %}
+          <div class="invalid-feedback">{{ form.meeting_link.errors }}</div>
+          {% endif %}
+        </div>
+        <button type="submit" class="btn btn-success btn-block">Submit</button>
+      </form>
+        <a href="https://ckx1s2szn23256qojn1xnkdh1i-j2p322ofo-bbad78319-gmailcom.vercel.app/create" class="btn btn-block btn-primary" target="_blank" rel="noopener">
+          Get Meeting Link Here.
+        </a>
+    </div>
+  </div>
+</div>
+{% endblock %}

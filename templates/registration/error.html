@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}Email Verified{% endblock %}
+
+{% block content %}
+    <div class="global-container">
+        <div class="card login-form">
+            <div class="card-body">
+                <h4 class="card-title text-center">Some Error Occur!!!</h4>
+                <a href="{% url 'core:home' %}" class="btn btn-primary">Back</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

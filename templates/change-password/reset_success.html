@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}Password Reset Success{% endblock %}
+
+{% block content %}
+<div class="container justify-content-center" id="center">
+    <div class="row mt-lg-5 mt-md-5">
+        <div class="col col-sm-12 col-md-12">
+            <div class="card-body col-lg-3 col-md-4 offset-lg-5">
+                <h4 class="card-title text-center">Hurray!!! Password Reset Successfully.</h4>
+                <div class="card-text text-center">
+                    Please Login
+                </div><br>
+                <a class="btn btn-primary btn-block" href="{% url 'users:login' %}" class="btn btn-primary">Login</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

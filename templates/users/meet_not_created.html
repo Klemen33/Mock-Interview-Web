@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %} Noobsterr: Professionals {% endblock %}
+
+{% block content %}
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h2>Welcome to N&#128578;&#128579;bsterr!<span class="icon-emo-happy"></span></h2>
+      <p class="lead">
+      {% if user.is_authenticated %}
+        {% if user.is_student %}
+        It seems you have not create any Mock Interview Yet.
+            <strong>Go to Home Page and select your Professional, by click the request button.</strong>
+        {% else %}
+            Your Meeting List will be available here.
+        {% endif %}
+      {% endif %}
+        </p>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+  <h2>Sign up to use.</h2>
+  <p class="lead">Select below the type of account you want to create</p>
+  <a href="{% url 'users:student_signup' %}" class="btn btn-student btn-lg btn-primary" role="button">I'm a Student</a>
+  <a href="{% url 'users:interviewer_signup' %}" class="btn btn-teacher btn-lg btn-primary" role="button">I'm a Professional</a>
+</div>
+</div>
+{% endblock %}

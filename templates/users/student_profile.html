@@ -1,0 +1,43 @@
+<!-- templates/users/profile.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ user.username }} | Noobsterr - Student{% endblock title %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+<div class="container">
+  <div class="row">
+    {% if not profile.email_confirmed %}
+    <div class="row">
+      Please verify your Email. It is needed to be verified withing 3 days from registration day. <a class="bg-danger" style="color: aliceblue;" href="{% url 'users:send_token' %}">Verify</a>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<div class="container-fluid mt-5">
+  <div class="row">
+    <div class="card col-lg-6 offset-lg-3 mb-3" style="box-shadow: 1rem; border-width: 1rem;">
+      <div class="row">
+        {% if profile.image %}
+        <img class="card-img-top col-sm-3 col-4 my-3" src="{{ profile.image.url }}" alt="{{ user.username }}">
+        {% else %}
+        <img class="card-img-top col-sm-3 col-4 my-3" src="{% static 'img/avatar.png' %}" alt="{{ user.username }}">
+        {% endif %}
+        <div class="card-body col-9">
+          <h2 class="card-title my-3">{{ user.username }}</h2>
+          <p>Last login on: {{ user.last_login }}</p>
+          <p><a href="{% url 'users:edit_stu_profile' %}">Edit Profile</a></p>
+          <p class="card-text">Name: {{ profile.student_name }}</p>
+          <p class="card-text">College: {{ profile.college_name }}</p>
+          <p class="card-text">About: {{ profile.about_me }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{% endblock %}

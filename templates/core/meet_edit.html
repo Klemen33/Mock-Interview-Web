@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+<!-- {#% load crispy_forms_tags %#} -->
+
+{% block content %}
+<div class="container d-flex justify-content-center" id="center">
+    <div class="row mt-lg-5 mt-md-5">
+        <div class="col col-sm-12 col-md-12">
+        <p>Previous Date & Time: {{ meet_req.meet_date_time }}</p>
+        <h2>Meeting Request Edit Form</h2>
+        <form method="post" novalidate>
+          {% csrf_token %}
+          <div class="form-group">
+            {{ form.meet_date_time.label_tag }}
+            <input type="text" placeholder="YYYY-mm-dd HH:MM" class="form-control {% if form.meet_date_time.errors %}is-invalid{% endif %}" id="id_meet_date_time"
+              name="meet_date_time" value='{{ form.meet_date_time.value|default:"" }}'>
+            <small class="text-muted">{{ form.meet_date_time.help_text }}</small>
+            {% if form.meet_date_time.errors %}
+            <div class="invalid-feedback">{{ form.meet_date_time.errors }}</div>
+            {% endif %}
+          </div>
+          <button type="submit" class="btn btn-success btn-block">Submit</button>
+        </form>
+        <i style="color: chocolate;">Please type the: YYYY-mm-dd HH:MM<br>
+          Date as: Year-Month-Day(2022-03-23) and <br>
+          Time as: 24 hour format(Eg: 23:30) for 11:30 PM</i>
+      </div>
+    </div>
+  </div>
+  {% endblock %}

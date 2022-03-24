@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h2>Welcome to N&#128578;&#128579;bsterr!<span class="icon-emo-happy"></span></h2>
+    <p class="lead">
+      If you already have an account, go ahead and <a href="{% url 'users:login' %}">log in</a>. If you are new to Noobsterr, get started
+      by creating a <a href="{% url 'users:student_signup' %}">student account</a> or a <a href="{% url 'users:interviewer_signup' %}">Professional account</a>.
+    </p>
+  </div>
+</div>
+{% endblock %}
